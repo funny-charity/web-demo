@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Wishes | Funny Charity</title>
+    <meta
+      name="description"
+      content="Browse all Funny Charity wishes, including fulfilled and in progress stories."
+    />
+    <script>
+      (function () {
+        var storedTheme = localStorage.getItem("funny-theme");
+        if (storedTheme === "light" || storedTheme === "dark") {
+          document.documentElement.setAttribute("data-theme", storedTheme);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="all-wishes.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <section class="hero">
+        <div class="container">
+          <nav class="nav" aria-label="Primary">
+            <a class="brand" href="home-02.html">
+              <img
+                src="assets/buddha-hand-transparent-tight.png"
+                alt="Buddha hand logo"
+              />
+              <span>Funny Charity</span>
+            </a>
+
+            <ul class="nav-links">
+              <li><a class="is-active" href="all-wishes.html">Semua Harapan</a></li>
+              <li><a href="about-me.html">Tentang Kami</a></li>
+            </ul>
+
+            <div class="nav-actions">
+              <button
+                class="theme-toggle"
+                type="button"
+                aria-label="Switch to dark mode"
+                aria-pressed="false"
+              >
+                <span class="theme-toggle-track">
+                  <span class="theme-toggle-label theme-toggle-label-light">Light</span>
+                  <span class="theme-toggle-thumb" aria-hidden="true"></span>
+                  <span class="theme-toggle-label theme-toggle-label-dark">Dark</span>
+                </span>
+              </button>
+
+              <a class="nav-cta" href="https://funnycharity.com/general-donate">
+                <span>Berdana</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </nav>
+
+          <div class="wish-hero">
+            <div class="wish-hero-panel">
+              <div class="wish-hero-copy">
+                <span class="hero-pill">All Wishes</span>
+                <h1>Every wish in one place, from progress to fulfilled joy.</h1>
+                <p>
+                  Explore heartfelt requests, follow current support efforts, and revisit
+                  fulfilled wishes that already changed a child’s day for the better.
+                </p>
+                <div class="hero-meta">
+                  <span>Fulfilled stories</span>
+                  <span>In progress support</span>
+                  <span>Filter and sort view</span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="wish-summary" aria-label="Wish summary">
+              <span class="summary-label">Overview</span>
+              <div class="summary-grid">
+                <div class="summary-card">
+                  <strong id="totalWishCount">0</strong>
+                  <span>Total wishes</span>
+                </div>
+                <div class="summary-card">
+                  <strong id="inProgressCount">0</strong>
+                  <span>In progress</span>
+                </div>
+                <div class="summary-card">
+                  <strong id="fulfilledCount">0</strong>
+                  <span>Fulfilled</span>
+                </div>
+                <div class="summary-card">
+                  <strong>6</strong>
+                  <span>Shown per page</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <main class="wish-board">
+        <div class="container board-shell">
+          <section class="toolbar" aria-label="Filter and sorting">
+            <div class="toolbar-copy">
+              <h2>Browse all wishes</h2>
+              <p>
+                Use the status filters and sorting controls to focus on fulfilled stories
+                or wishes that are still actively being supported.
+              </p>
+            </div>
+
+            <div class="toolbar-controls">
+              <div class="control-group">
+                <label>Status</label>
+                <div class="filter-buttons" id="filterButtons">
+                  <button class="filter-button is-active" type="button" data-filter="all">
+                    All
+                  </button>
+                  <button class="filter-button" type="button" data-filter="in-progress">
+                    In Progress
+                  </button>
+                  <button class="filter-button" type="button" data-filter="fulfilled">
+                    Fulfilled
+                  </button>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label for="sortSelect">Sort by</label>
+                <select class="sort-select" id="sortSelect">
+                  <option value="newest">Newest first</option>
+                  <option value="oldest">Oldest first</option>
+                  <option value="title-asc">Title A-Z</option>
+                  <option value="title-desc">Title Z-A</option>
+                  <option value="status">Status</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <div class="results-meta">
+            <p id="resultsCount">0 wishes found</p>
+            <p id="resultsSummary">Showing 0 of 0</p>
+          </div>
+
+          <section class="results-grid" id="wishGrid" aria-live="polite"></section>
+          <div class="empty-state" id="emptyState">
+            No wishes match this filter right now. Try another status or sorting option.
+          </div>
+
+          <nav class="pagination" aria-label="Pagination">
+            <p class="pagination-info" id="paginationInfo">Page 1 of 1</p>
+            <div class="pagination-actions">
+              <button class="pagination-button" id="prevPage" type="button">Previous</button>
+              <span class="page-indicator" id="pageIndicator">1 / 1</span>
+              <button class="pagination-button" id="nextPage" type="button">Next</button>
+            </div>
+          </nav>
+        </div>
+      </main>
+
+      <footer>
+        <div class="container footer-panel">
+          <div>
+            <div class="footer-brand">
+              <img
+                src="https://funnycharity.com/charity/giving/resources/images/footer-logo.png"
+                alt="Funny Charity"
+              />
+              <div>
+                <strong class="footer-brand-title">Funny Charity</strong>
+                <span class="footer-brand-subtitle">Yayasan Dana Berkah Utama</span>
+              </div>
+            </div>
+
+            <p class="footer-copy">
+              Funnycharity.com adalah situs Yayasan Dana Berkah Utama yang mempunyai
+              misi untuk kemanusiaan terutama membantu pasien cilik tidak mampu.
+            </p>
+          </div>
+
+          <div class="footer-cta">
+            <ul class="footer-links">
+              <li><a href="all-wishes.html">Semua Harapan</a></li>
+              <li><a href="about-me.html">Tentang Kami</a></li>
+              <li><a href="https://funnycharity.com/ambulance">Ambulans Funny</a></li>
+            </ul>
+            <a class="button-primary" href="https://funnycharity.com/general-donate">
+              <span>Berdana sekarang</span>
+              <span class="button-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var toggle = document.querySelector(".theme-toggle");
+
+        function getTheme() {
+          return root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+        }
+
+        function applyTheme(theme) {
+          root.setAttribute("data-theme", theme);
+          localStorage.setItem("funny-theme", theme);
+          if (!toggle) return;
+          var isDark = theme === "dark";
+          toggle.setAttribute("aria-pressed", String(isDark));
+          toggle.setAttribute(
+            "aria-label",
+            isDark ? "Switch to light mode" : "Switch to dark mode"
+          );
+        }
+
+        applyTheme(getTheme());
+
+        if (toggle) {
+          toggle.addEventListener("click", function () {
+            applyTheme(getTheme() === "dark" ? "light" : "dark");
+          });
+        }
+      })();
+
+      (function () {
+        var wishes = [
+          {
+            title: "A Warm Therapy Room for Naira",
+            excerpt:
+              "Naira is continuing weekly therapy and needs a calm recovery room with adaptive seating and soft lighting.",
+            status: "in-progress",
+            date: "2026-03-11",
+            photo:
+              "http://funnycharity.com/charity/external/banner/images/5cb47c606c89e_Boncel3.jpg"
+          },
+          {
+            title: "School Starter Kit for Rizky",
+            excerpt:
+              "Rizky's wish is simple: a complete school set with shoes, books, and a new backpack so he can return with confidence.",
+            status: "fulfilled",
+            date: "2026-02-25",
+            photo:
+              "http://funnycharity.com/charity/external/banner/images/5cc150e307b4e_Boncel10-1.jpg"
+          },
+          {
+            title: "Quiet Recovery Corner for Aluna",
+            excerpt:
+              "Aluna's family is preparing a small recovery corner at home after treatment and still needs bedding and a side cabinet.",
+            status: "in-progress",
+            date: "2026-03-02",
+            photo:
+              "https://funnycharity.com/charity/giving/resources/images/partners/img-4.jpg"
+          },
+          {
+            title: "Nutrition Support for Baby Farel",
+            excerpt:
+              "A three-month package of milk, nutrition monitoring, and follow-up visits has already been completed for Farel.",
+            status: "fulfilled",
+            date: "2026-01-18",
+            photo:
+              "https://funnycharity.com/charity/giving/resources/images/partners/img-5.jpg"
+          },
+          {
+            title: "Mobility Aid for Sinta",
+            excerpt:
+              "Sinta is waiting for a lightweight walker that will help her attend checkups more comfortably and safely.",
+            status: "in-progress",
+            date: "2026-03-14",
+            photo:
+              "https://funnycharity.com/charity/giving/resources/images/partners/ambulance-funny-01.jpg"
+          },
+          {
+            title: "Birthday Wish for Andra",
+            excerpt:
+              "Andra's room makeover and birthday surprise were completed with help from donors and volunteers last month.",
+            status: "fulfilled",
+            date: "2026-02-08",
+            photo:
+              "https://funnycharity.com/charity/giving/resources/images/partners/img-3.jpg"
+          },
+          {
+            title: "Daily Transport for Mika",
+            excerpt:
+              "Mika still needs safe transport support for hospital visits while her treatment schedule remains active.",
+            status: "in-progress",
+            date: "2026-03-06",
+            photo:
+              "http://funnycharity.com/charity/external/banner/images/5cb47c606c89e_Boncel3.jpg"
+          },
+          {
+            title: "Hearing Device for Dito",
+            excerpt:
+              "Dito received his hearing device and follow-up fitting session, opening a brighter communication journey for his family.",
+            status: "fulfilled",
+            date: "2025-12-29",
+            photo:
+              "http://funnycharity.com/charity/external/banner/images/5cc150e307b4e_Boncel10-1.jpg"
+          },
+          {
+            title: "Comfort Pack for Hana",
+            excerpt:
+              "Hana's wish pack includes storybooks, blankets, and treatment-day essentials that are still being collected.",
+            status: "in-progress",
+            date: "2026-02-20",
+            photo:
+              "https://funnycharity.com/charity/giving/resources/images/partners/img-4.jpg"
+          }
+        ];
+
+        var pageSize = 6;
+        var currentPage = 1;
+        var activeFilter = "all";
+        var activeSort = "newest";
+
+        var grid = document.getElementById("wishGrid");
+        var emptyState = document.getElementById("emptyState");
+        var filterButtons = Array.prototype.slice.call(
+          document.querySelectorAll(".filter-button")
+        );
+        var sortSelect = document.getElementById("sortSelect");
+        var resultsCount = document.getElementById("resultsCount");
+        var resultsSummary = document.getElementById("resultsSummary");
+        var paginationInfo = document.getElementById("paginationInfo");
+        var pageIndicator = document.getElementById("pageIndicator");
+        var prevPage = document.getElementById("prevPage");
+        var nextPage = document.getElementById("nextPage");
+
+        document.getElementById("totalWishCount").textContent = wishes.length;
+        document.getElementById("inProgressCount").textContent = wishes.filter(function (wish) {
+          return wish.status === "in-progress";
+        }).length;
+        document.getElementById("fulfilledCount").textContent = wishes.filter(function (wish) {
+          return wish.status === "fulfilled";
+        }).length;
+
+        function getFilteredWishes() {
+          var filtered = wishes.filter(function (wish) {
+            return activeFilter === "all" ? true : wish.status === activeFilter;
+          });
+
+          filtered.sort(function (a, b) {
+            if (activeSort === "oldest") return new Date(a.date) - new Date(b.date);
+            if (activeSort === "title-asc") return a.title.localeCompare(b.title);
+            if (activeSort === "title-desc") return b.title.localeCompare(a.title);
+            if (activeSort === "status") return a.status.localeCompare(b.status);
+            return new Date(b.date) - new Date(a.date);
+          });
+
+          return filtered;
+        }
+
+        function getStatusLabel(status) {
+          return status === "fulfilled" ? "Fulfilled" : "In Progress";
+        }
+
+        function render() {
+          var filtered = getFilteredWishes();
+          var totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+          if (currentPage > totalPages) currentPage = totalPages;
+
+          var start = (currentPage - 1) * pageSize;
+          var pageItems = filtered.slice(start, start + pageSize);
+
+          grid.innerHTML = pageItems
+            .map(function (wish) {
+              return (
+                '<article class="wish-card">' +
+                '<div class="wish-card-media"><img src="' +
+                wish.photo +
+                '" alt="' +
+                wish.title +
+                '"></div>' +
+                '<div class="wish-card-body">' +
+                '<div class="wish-card-head">' +
+                "<h3>" +
+                wish.title +
+                "</h3>" +
+                '<span class="status-badge" data-status="' +
+                wish.status +
+                '">' +
+                getStatusLabel(wish.status) +
+                "</span>" +
+                "</div>" +
+                "<p>" +
+                wish.excerpt +
+                "</p>" +
+                "</div>" +
+                "</article>"
+              );
+            })
+            .join("");
+
+          emptyState.classList.toggle("is-visible", filtered.length === 0);
+          resultsCount.textContent = filtered.length + " wishes found";
+          resultsSummary.textContent =
+            filtered.length === 0
+              ? "Showing 0 of 0"
+              : "Showing " + (start + 1) + "-" + (start + pageItems.length) + " of " + filtered.length;
+
+          paginationInfo.textContent = "Page " + currentPage + " of " + totalPages;
+          pageIndicator.textContent = currentPage + " / " + totalPages;
+          prevPage.disabled = currentPage === 1;
+          nextPage.disabled = currentPage === totalPages;
+        }
+
+        filterButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            activeFilter = button.getAttribute("data-filter");
+            currentPage = 1;
+            filterButtons.forEach(function (item) {
+              item.classList.toggle("is-active", item === button);
+            });
+            render();
+          });
+        });
+
+        sortSelect.addEventListener("change", function () {
+          activeSort = sortSelect.value;
+          currentPage = 1;
+          render();
+        });
+
+        prevPage.addEventListener("click", function () {
+          if (currentPage > 1) {
+            currentPage -= 1;
+            render();
+          }
+        });
+
+        nextPage.addEventListener("click", function () {
+          var filtered = getFilteredWishes();
+          var totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+          if (currentPage < totalPages) {
+            currentPage += 1;
+            render();
+          }
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>

@@ -293,12 +293,207 @@ p {
   line-height: 1;
 }
 
+.wish-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 0;
+  padding: 24px 28px;
+  border: 1px solid var(--border-strong);
+  border-radius: 34px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+    radial-gradient(circle at 12% 10%, rgba(62, 159, 208, 0.12), transparent 28%),
+    linear-gradient(135deg, rgba(9, 21, 48, 0.94), rgba(13, 24, 49, 0.98));
+  box-shadow: var(--soft-shadow);
+  overflow: hidden;
+}
+
+.wish-banner::before {
+  content: "";
+  position: absolute;
+  inset: auto -80px -120px auto;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(84, 167, 224, 0.16), transparent 66%);
+  pointer-events: none;
+}
+
+.wish-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02), transparent 40%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 0,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 34px
+    );
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+:root[data-theme="dark"] .wish-banner {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
+    radial-gradient(circle at 12% 10%, rgba(84, 167, 224, 0.12), transparent 28%),
+    linear-gradient(135deg, rgba(9, 21, 48, 0.96), rgba(7, 16, 34, 0.99));
+}
+
+.wish-banner-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  flex: 1 1 520px;
+  max-width: 52ch;
+  color: #f4f7ff;
+}
+
+.wish-banner .section-pill {
+  width: min(100%, 470px);
+  justify-content: flex-start;
+  padding: 10px 16px;
+  border-color: rgba(87, 152, 231, 0.52);
+  background: rgba(13, 29, 63, 0.38);
+  color: rgba(244, 247, 255, 0.96);
+}
+
+.wish-banner-copy h2 {
+  max-width: 11ch;
+  font-size: clamp(2.2rem, 3.4vw, 3.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.wish-banner-copy p {
+  color: rgba(228, 235, 248, 0.9);
+  line-height: 1.55;
+  font-size: 0.98rem;
+  max-width: 38ch;
+}
+
+.wish-banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.wish-banner-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(145, 169, 226, 0.16);
+  color: rgba(237, 244, 255, 0.84);
+  font-size: 0.84rem;
+}
+
+.wish-banner-meta span::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #79b8ff;
+  box-shadow: 0 0 12px rgba(121, 184, 255, 0.6);
+}
+
+.wish-banner-side {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  flex: 0 0 320px;
+  padding: 18px 20px;
+  margin-right: 8px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(16, 28, 57, 0.72), rgba(10, 19, 39, 0.44));
+  border: 1px solid rgba(145, 169, 226, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.wish-banner-note {
+  max-width: 24ch;
+  color: rgba(212, 225, 247, 0.8);
+  line-height: 1.55;
+  font-size: 0.92rem;
+}
+
+.wish-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.wish-banner-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px 12px 20px;
+  border-radius: 999px;
+  background: rgba(11, 20, 40, 0.92);
+  border: 1px solid rgba(145, 169, 226, 0.16);
+  color: #7f95ff;
+  font-weight: 700;
+  font-size: 0.98rem;
+  white-space: nowrap;
+  box-shadow: 0 14px 30px rgba(4, 10, 24, 0.24);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  align-self: center;
+  margin-right: 0;
+}
+
+.wish-banner-cta:hover,
+.wish-banner-cta:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 34px rgba(4, 10, 24, 0.32);
+}
+
+.wish-banner-cta .button-arrow {
+  box-shadow: none;
+}
+
+.wish-banner-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(145, 169, 226, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(228, 235, 248, 0.92);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.wish-banner-secondary:hover,
+.wish-banner-secondary:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(145, 169, 226, 0.28);
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.56fr);
   gap: 28px;
   align-items: start;
-  padding: 14px 0 34px;
+  padding: 26px 0 34px;
 }
 
 .eyebrow,
@@ -331,7 +526,7 @@ p {
 }
 
 .hero-side {
-  padding-top: 20px;
+  padding-top: 8px;
 }
 
 .hero-side p {
@@ -378,6 +573,7 @@ p {
 
 .hero-media {
   position: relative;
+  margin-top: 18px;
   min-height: 520px;
   border-radius: 28px;
   overflow: hidden;
@@ -767,6 +963,14 @@ footer {
     margin-left: auto;
   }
 
+  .wish-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 22px;
+    min-height: 0;
+  }
+
   .hero-grid,
   .two-column,
   .split-lower,
@@ -814,6 +1018,44 @@ footer {
 
   .nav-actions {
     width: 100%;
+    justify-content: space-between;
+  }
+
+  .wish-banner {
+    padding: 16px;
+    border-radius: 22px;
+  }
+
+  .wish-banner .section-pill,
+  .wish-banner-copy h2 {
+    max-width: 100%;
+  }
+
+  .wish-banner-copy p {
+    max-width: 100%;
+  }
+
+  .wish-banner-side {
+    width: 100%;
+    flex-basis: auto;
+    margin-right: 0;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .wish-banner-note {
+    max-width: 100%;
+  }
+
+  .wish-banner-cta {
+    flex: 1 1 220px;
+    justify-content: space-between;
+    margin-right: 0;
+    align-self: stretch;
+  }
+
+  .wish-banner-secondary {
+    flex: 1 1 160px;
     justify-content: space-between;
   }
 
