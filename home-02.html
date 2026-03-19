@@ -60,7 +60,7 @@
           <div class="wish-banner">
             <div class="wish-banner-copy">
               <span class="section-pill">Make A Wish</span>
-              <h2>Bring hope closer for a child who needs it most.</h2>
+              <h2 id="wb-heading">Bring hope closer for a child who needs it most.</h2>
               <p>
                 Share a child’s urgent need or heartfelt wish with us. Fill up the form
                 and our team will review it for the next possible support step.
@@ -408,6 +408,68 @@
         toggle.addEventListener("click", function () {
           applyTheme(getTheme() === "dark" ? "light" : "dark");
         });
+      })();
+    </script>
+
+    <script>
+      /* Wish-banner scroll-reveal + typing effect */
+      (function () {
+        var banner  = document.querySelector(".wish-banner");
+        var heading = document.getElementById("wb-heading");
+        if (!banner || !heading) return;
+
+        var fullText   = heading.textContent.trim();
+        var charDelay  = 28;   /* ms per character */
+        var startDelay = 220;  /* wait after reveal before typing begins */
+
+        function runTyper() {
+          heading.textContent = "";
+          heading.classList.add("wb-cursor");
+
+          var i = 0;
+          function tick() {
+            if (i <= fullText.length) {
+              heading.textContent = fullText.slice(0, i);
+              i++;
+              setTimeout(tick, charDelay);
+            } else {
+              /* remove cursor 1.2 s after typing finishes */
+              setTimeout(function () {
+                heading.classList.remove("wb-cursor");
+              }, 1200);
+            }
+          }
+          setTimeout(tick, startDelay);
+        }
+
+        function reveal(target) {
+          target.classList.add("wb-visible");
+          /* respect reduced-motion — skip typing */
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            heading.textContent = fullText;
+            return;
+          }
+          runTyper();
+        }
+
+        if (!("IntersectionObserver" in window)) {
+          reveal(banner);
+          return;
+        }
+
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                reveal(entry.target);
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15 }
+        );
+
+        observer.observe(banner);
       })();
     </script>
   </body>

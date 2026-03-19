@@ -60,7 +60,7 @@
           <div class="wish-banner">
             <div class="wish-banner-copy">
               <span class="section-pill">Make A Wish</span>
-              <h2>Bring hope closer for a child who needs it most.</h2>
+              <h2 id="wb-heading">Bring hope closer for a child who needs it most.</h2>
               <p>
                 Share a child’s urgent need or heartfelt wish with us. Fill up the form
                 and our team will review it for the next possible support step.
@@ -408,6 +408,119 @@
         toggle.addEventListener("click", function () {
           applyTheme(getTheme() === "dark" ? "light" : "dark");
         });
+      })();
+    </script>
+
+    <script>
+      /* ── Unified scroll-reveal + wish-banner typing + count-up ── */
+      (function () {
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        /* ── Count-up for .metric strong elements ─────────────────── */
+        function countUp(el) {
+          var target = parseFloat(el.textContent.replace(/[^\d.]/g, "")) || 0;
+          if (target === 0 || reduced) return;
+          var start    = 0;
+          var duration = 1200;
+          var startTs  = null;
+          function step(ts) {
+            if (!startTs) startTs = ts;
+            var progress = Math.min((ts - startTs) / duration, 1);
+            var eased    = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(start + eased * (target - start));
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target;
+          }
+          requestAnimationFrame(step);
+        }
+
+        /* ── Wish-banner heading typer ────────────────────────────── */
+        function runTyper(heading) {
+          var fullText   = heading.dataset.text;
+          var charDelay  = 28;
+          var startDelay = 220;
+          heading.textContent = "";
+          heading.classList.add("wb-cursor");
+          var i = 0;
+          function tick() {
+            if (i <= fullText.length) {
+              heading.textContent = fullText.slice(0, i++);
+              setTimeout(tick, charDelay);
+            } else {
+              setTimeout(function () { heading.classList.remove("wb-cursor"); }, 1200);
+            }
+          }
+          setTimeout(tick, startDelay);
+        }
+
+        /* ── Reveal handlers per target ───────────────────────────── */
+        function onReveal(el) {
+          /* Wish banner */
+          if (el.classList.contains("wish-banner")) {
+            el.classList.add("wb-visible");
+            var heading = el.querySelector("#wb-heading");
+            if (heading && !reduced) runTyper(heading);
+            return;
+          }
+
+          /* Hero media — also trigger count-up on metrics */
+          if (el.classList.contains("hero-media")) {
+            el.classList.add("sr-visible");
+            if (!reduced) {
+              el.querySelectorAll(".metric strong").forEach(function (m) {
+                setTimeout(function () { countUp(m); }, 520);
+              });
+            }
+            return;
+          }
+
+          /* Everything else */
+          el.classList.add("sr-visible");
+        }
+
+        /* ── Build target list ────────────────────────────────────── */
+        var selectors = [
+          ".nav",
+          ".wish-banner",
+          ".hero-media",
+          ".hero-grid",
+          ".partners",
+          ".section",
+          ".vision-card",
+          ".contact-card",
+          ".footer-panel"
+        ];
+
+        var targets = [];
+        selectors.forEach(function (sel) {
+          document.querySelectorAll(sel).forEach(function (el) {
+            targets.push(el);
+          });
+        });
+
+        /* ── Stash wish-banner heading text before typer clears it ── */
+        var wbHeading = document.getElementById("wb-heading");
+        if (wbHeading) wbHeading.dataset.text = wbHeading.textContent.trim();
+
+        /* ── Fallback: no IntersectionObserver ───────────────────── */
+        if (!("IntersectionObserver" in window)) {
+          targets.forEach(onReveal);
+          return;
+        }
+
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                onReveal(entry.target);
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+        );
+
+        targets.forEach(function (el) { observer.observe(el); });
       })();
     </script>
   </body>
